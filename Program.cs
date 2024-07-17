@@ -27,11 +27,56 @@ _#/|##########/\######(   /\   )######/\##########|\#_
     Console.WriteLine("For intruding on my lair you must guess the number I'm thinking of.");
     Console.WriteLine("Guess correctly, and you can have a gift from my hoard!");
     Console.WriteLine("Guess incorrectly, and you can be my dinner.");
+    string randomBoon = Boons();
+    string randomDeath = Deaths();
     int difficultyAttempts = SelectDifficulty();
     Console.WriteLine($"You will have {difficultyAttempts} attempts to find the correct answer.");
     int secretNumber = SecretNumber();
-    Guess(secretNumber, difficultyAttempts);
+    Guess(secretNumber, difficultyAttempts, randomBoon, randomDeath);
 }
+
+    string Boons()
+    {
+        List<string> boons = new List<string> {
+            "a basket of orc feathers",
+            "a potion of endless giggles",
+            "a cloak of invisibility that only works on Tuesdays",
+            "a talking sword with a sarcastic sense of humor",
+            "a bottomless mug that always fills with your favorite beverage",
+            "a magical hat that summons an army of friendly squirrels",
+            "a pair of enchanted shoes that make you dance like nobody's watching",
+            "a spellbook that only contains useless spells, like making tea boil faster",
+            "a pet dragon that hoards bubblegum instead of gold",
+            "a mystical crystal ball that tells you the best jokes from alternate dimensions"
+        };
+
+        Random rand = new Random();
+        int index = rand.Next(boons.Count);
+
+        return boons[index];
+    }
+
+    string Deaths()
+    {
+        List<string> deaths = new List<string> {
+            "chewed thoroughly and spit out as indigestible",
+            "swallowed whole and then burped out with a cloud of glitter",
+            "nibbled on like a crunchy snack",
+            "gobbled up like a piece of toast with extra butter",
+            "devoured with a side of enchanted hot sauce",
+            "munched on like a tasty tidbit",
+            "crunched up like a crunchy potato chip",
+            "munched down like a delicious dessert",
+            "gulped down like a refreshing beverage",
+            "gobbled up like a delicious appetizer"
+        };
+
+        Random rand = new Random();
+        int index = rand.Next(deaths.Count);
+
+        return deaths[index];
+    }
+    
 
 int SelectDifficulty()
 {
@@ -66,6 +111,12 @@ int SelectDifficulty()
             Console.WriteLine($"\nYour difficulty level is {difficultyString}.");
             return difficultyAttempts;
         }
+        else if (selectedDifficulty == "boolProp testingCheatsEnabled true")
+        {
+            string difficultyString = "CHEATER";
+            Console.WriteLine($"\nYou have enabled {difficultyString} mode. This has angered the gods.");
+            return int.MaxValue;
+        }
         else
         {
             Console.WriteLine("\nInvalid selection. Please choose a valid difficulty level.");
@@ -82,7 +133,7 @@ int SecretNumber()
     return secretNumber;
 }
 
-void Guess(int secretNumber, int difficultyAttempts)
+void Guess(int secretNumber, int difficultyAttempts, string randomBoon, string randomDeath)
 {
     int answer = 0;
     int attempts = 0;
@@ -101,7 +152,7 @@ void Guess(int secretNumber, int difficultyAttempts)
             Console.WriteLine($"\nYou answered {answer}. This was attempt #{attempts} of {difficultyAttempts}.");
             if (answer == secretNumber)
             {
-                Console.WriteLine($"\nCorrect! You have received a basket of orc feathers. You figured out the secret number on attempt #{attempts}.");
+                Console.WriteLine($"\nCorrect! You have received {randomBoon}. You figured out the secret number on attempt #{attempts}.");
                 correct = true;
             }
             else if (answer > secretNumber && attempts < difficultyAttempts)
@@ -121,6 +172,7 @@ void Guess(int secretNumber, int difficultyAttempts)
 
     if (attempts >= difficultyAttempts || !correct)
     {
-        Console.WriteLine($"\nIncorrect! The answer was {secretNumber}. You are dinner.");
+        Console.WriteLine($"\nIncorrect! The answer was {secretNumber}. You are {randomDeath}.");
     }
 }
+

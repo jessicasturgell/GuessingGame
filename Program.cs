@@ -145,10 +145,10 @@ void Guess(int secretNumber, int difficultyAttempts, string randomBoon, string r
         Console.Write($"\nEnter a number (1-100): ");
         string input = Console.ReadLine();
         isParsed = int.TryParse(input, out answer);
-        attempts++;
 
         if (isParsed && answer >= 1 && answer <= 100)
         {
+            attempts++;
             Console.WriteLine($"\nYou answered {answer}. This was attempt #{attempts} of {difficultyAttempts}.");
             if (answer == secretNumber)
             {
